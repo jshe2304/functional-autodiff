@@ -6,8 +6,9 @@ module AutoDiff.Types
 -- | A dual number consists of a value and its derivative.
 -- Used for forward-mode automatic differentiation.
 data Dual a = Dual
-    { primal  :: !a  -- ^ The value
-    , tangent :: !a  -- ^ The derivative
+    {
+        primal  :: !a,  -- ^ The value 
+        tangent :: !a  -- ^ The derivative
     } deriving (Show, Eq)
 
 instance Num a => Num (Dual a) where
@@ -30,15 +31,6 @@ instance Floating a => Floating (Dual a) where
     sin (Dual x x')     = Dual (sin x) (x' * cos x)
     cos (Dual x x')     = Dual (cos x) (negate x' * sin x)
     tan (Dual x x')     = Dual (tan x) (x' / (cos x * cos x))
-    asin (Dual x x')    = Dual (asin x) (x' / sqrt (1 - x * x))
-    acos (Dual x x')    = Dual (acos x) (negate x' / sqrt (1 - x * x))
-    atan (Dual x x')    = Dual (atan x) (x' / (1 + x * x))
-    sinh (Dual x x')    = Dual (sinh x) (x' * cosh x)
-    cosh (Dual x x')    = Dual (cosh x) (x' * sinh x)
-    tanh (Dual x x')    = Dual (tanh x) (x' * (1 - tanh x * tanh x))
-    asinh (Dual x x')   = Dual (asinh x) (x' / sqrt (x * x + 1))
-    acosh (Dual x x')   = Dual (acosh x) (x' / sqrt (x * x - 1))
-    atanh (Dual x x')   = Dual (atanh x) (x' / (1 - x * x))
     sqrt (Dual x x')    = Dual (sqrt x) (x' / (2 * sqrt x))
     Dual x x' ** Dual y y' = Dual (x ** y) (x ** y * (y' * log x + y * x' / x))
     logBase (Dual b b') (Dual x x') = Dual (logBase b x) ((x' / x - log x * b' / b) / log b)

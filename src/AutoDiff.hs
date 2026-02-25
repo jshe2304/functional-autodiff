@@ -6,6 +6,7 @@ module AutoDiff
     , var
     , constant
     , diff
+    , grad
     ) where
 
 import AutoDiff.Types
