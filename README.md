@@ -2,6 +2,17 @@
 
 A forward-mode automatic differentiation library in Haskell using dual numbers. Below is a guide to running all the code. A nice looking TeX report and the slides used in the presentation are in `tex/`. 
 
+## Project Structure
+
+- `src/AutoDiff/Types.hs` - `Dual a` type and typeclass instances (`Num`, `Fractional`, `Floating`)
+- `src/AutoDiff/Forward.hs` - Forward-mode AD operations: `var`, `constant`, `diff`, `grad`, `(^!)`
+- `src/AutoDiff.hs` - Main module, re-exports everything
+- `test/AutoDiffSpec.hs` - HSpec test suite
+- `app/LinearRegression.hs` - Linear regression example using AD-computed gradients
+- `app/LogisticRegression.hs` - Logistic regression example using AD-computed gradients
+- `visualization/` - Data generation and plotting scripts for derivative and gradient field visualizations
+- `tex/` - TeX report and presentation slides
+
 ## Build
 
 ```bash

@@ -39,6 +39,18 @@ The key combinators are:
 \end{itemize}
 Because \texttt{diff} returns an ordinary function, higher-order derivatives are obtained by composition: \texttt{(diff . diff) f} is $f''$, \texttt{(diff . diff . diff) f} is $f'''$, and so on. This works because the user's function is polymorphic over \texttt{Num}/\texttt{Floating}, allowing nested layers of \texttt{Dual}.
 
+\section{Project Structure}
+
+The project is organized as a Cabal package with the library, executables, and tests separated as follows:
+\begin{itemize}
+  \item \texttt{src/AutoDiff/Types.hs} defines the \texttt{Dual a} type and its typeclass instances.
+  \item \texttt{src/AutoDiff/Forward.hs} provides the differentiation combinators (\texttt{var}, \texttt{diff}, \texttt{grad}, etc.).
+  \item \texttt{src/AutoDiff.hs} re-exports both modules as the public API.
+  \item \texttt{app/LinearRegression.hs} and \texttt{app/LogisticRegression.hs} contain the regression examples.
+  \item \texttt{visualization/} holds Haskell programs that generate CSV data and Python scripts that produce plots.
+  \item \texttt{test/AutoDiffSpec.hs} contains HSpec property and unit tests for correctness.
+\end{itemize}
+
 \section{Regression Examples}
 
 Both regression examples use \texttt{grad} to compute gradients of a loss function, which are then used for gradient descent optimization. The training loop is model-agnostic: it takes any polymorphic loss function \texttt{[a] -> a} and updates parameters by $\theta \leftarrow \theta - \eta \nabla L(\theta)$.
